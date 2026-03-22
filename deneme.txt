@@ -1,0 +1,4 @@
+Bilgisayar mühendisliği bölümü.
+Bu proje bir text search engine projesidir.
+Bilgisayar kelimesi burada tekrar geçiyor.
+Bugün bilgisayar ve yazılım hakkında konuştuk.
