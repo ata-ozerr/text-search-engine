@@ -1,68 +1,22 @@
 #include <stdio.h>
 #include <string.h>
-#include "search.h"
 
-#define MAX_FILENAME 256
-#define MAX_WORD 100
+void searchWordInFile(const char *dosyaAdi, const char *aranan);
 
-int main(void)
+int main()
 {
-    char filename[MAX_FILENAME];
-    char word[MAX_WORD];
-    SearchResult result;
-    int status;
-    int i;
+    char dosyaAdi[256];
+    char kelime[100];
 
     printf("Dosya adini giriniz: ");
-    if (fgets(filename, sizeof(filename), stdin) == NULL) {
-        printf("Dosya adi okunurken hata olustu.\n");
-        return 1;
-    }
-
-    filename[strcspn(filename, "\n")] = '\0';
-
-    if (strlen(filename) == 0) {
-        printf("Gecersiz dosya adi.\n");
-        return 1;
-    }
+    fgets(dosyaAdi, sizeof(dosyaAdi), stdin);
+    dosyaAdi[strcspn(dosyaAdi, "\n")] = '\0';
 
     printf("Aranacak kelimeyi giriniz: ");
-    if (fgets(word, sizeof(word), stdin) == NULL) {
-        printf("Kelime okunurken hata olustu.\n");
-        return 1;
-    }
+    fgets(kelime, sizeof(kelime), stdin);
+    kelime[strcspn(kelime, "\n")] = '\0';
 
-    word[strcspn(word, "\n")] = '\0';
-
-    if (strlen(word) == 0) {
-        printf("Gecersiz kelime.\n");
-        return 1;
-    }
-
-    status = search_word_in_file(filename, word, &result);
-
-    if (status == -1) {
-        printf("Dosya acilamadi: %s\n", filename);
-        return 1;
-    }
-
-    printf("\n--- Arama Sonuclari ---\n");
-    printf("Aranan kelime: %s\n", word);
-    printf("Dosya: %s\n", filename);
-    printf("Toplam tekrar sayisi: %d\n", result.total_count);
-
-    if (result.line_count > 0) {
-        printf("Kelimenin gectigi satir numaralari: ");
-        for (i = 0; i < result.line_count; i++) {
-            printf("%d", result.line_numbers[i]);
-            if (i < result.line_count - 1) {
-                printf(", ");
-            }
-        }
-        printf("\n");
-    } else {
-        printf("Kelime dosyada bulunamadi.\n");
-    }
+    searchWordInFile(dosyaAdi, kelime);
 
     return 0;
 }
